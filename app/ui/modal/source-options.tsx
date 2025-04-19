@@ -1,6 +1,6 @@
 "use client";
 
-import { FileText, LinkIcon } from "lucide-react";
+import { FileText } from "lucide-react";
 import SourceOption from "./source-option";
 
 export default function SourceOptions() {
@@ -36,11 +36,6 @@ export default function SourceOptions() {
         }
       />
 
-      {/* Link */}
-      <SourceOption 
-        name="Link"
-        icon={<LinkIcon className="h-6 w-6 text-blue-500" />}
-      />
 
       {/* Website */}
       <SourceOption 
@@ -83,28 +78,6 @@ export default function SourceOptions() {
             <rect x="8" y="2" width="8" height="4" rx="1" stroke="black" strokeWidth="2" />
             <path d="M8 10H16" stroke="black" strokeWidth="2" strokeLinecap="round" />
             <path d="M8 14H16" stroke="black" strokeWidth="2" strokeLinecap="round" />
-          </svg>
-        }
-      />
-
-      {/* Copied text */}
-      <SourceOption 
-        name="Copied text"
-        icon={
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M8 5H6C4.89543 5 4 5.89543 4 7V19C4 20.1046 4.89543 21 6 21H16C17.1046 21 18 20.1046 18 19V18"
-              stroke="black"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-            <path
-              d="M15 3H9C7.89543 3 7 3.89543 7 5V15C7 16.1046 7.89543 17 9 17H19C20.1046 17 21 16.1046 21 15V9M15 3L21 9M15 3V9H21"
-              stroke="black"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
           </svg>
         }
       />
