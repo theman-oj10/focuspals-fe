@@ -30,9 +30,26 @@ const VideoStream = () => {
 				const imageCapture = new ImageCapture(videoTrack);
 
 				const captureFrame = () => {
-					imageCapture.grabFrame().then((imageBitmap: any) => {
-						// Send video frame as Blob to backend via WebSocket
-						socketRef.current.emit("sendVideoFrame", imageBitmap);
+					imageCapture.grabFrame().then((imageBitmap) => {
+						// Create a canvas to extract image data from the ImageBitmap
+						const canvas = document.createElement('canvas');
+						canvas.width = imageBitmap.width;
+						canvas.height = imageBitmap.height;
+
+						// Draw the ImageBitmap on the canvas
+						const ctx = canvas.getContext('2d');
+						if (!ctx) {
+							console.error("Failed to get canvas context");
+							return;
+						}
+						ctx.drawImage(imageBitmap, 0, 0);
+
+						// Convert canvas to a base64 string (remove the "data:image/png;base64," prefix if needed)
+						const base64Image = canvas.toDataURL('image/jpeg', 0.7).split(',')[1];
+
+						// Send the base64-encoded image to the server
+						socketRef.current.emit("sendVideoFrame", base64Image);
+						console.log("Frame sent to server", base64Image);
 					});
 				};
 
