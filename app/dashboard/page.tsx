@@ -15,7 +15,7 @@ export default function Dashboard() {
             <Sidebar onAddClick={() => setShowModal(true)} />
 
             {/* Main Content Area */}
-            <Chat />
+            <Chat onUpload={() => setShowModal(true)} />
 
             {/* Right Studio Panel */}
             <StudioPanel />
