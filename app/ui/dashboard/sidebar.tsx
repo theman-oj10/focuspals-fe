@@ -5,7 +5,7 @@ import React from 'react';
 export default function Sidebar({ onAddClick }: { onAddClick?: () => void }) {
   return (
     <div className="w-1/5 p-4 border-r bg-white">
-      <h1 className="text-xl font-semibold mb-4">Sources</h1>
+      <h1 className="text-lg font-semibold mb-4">Sources</h1>
       <div className="space-y-2">
         <button
           className="w-full py-2 px-3 bg-gray-100 rounded"

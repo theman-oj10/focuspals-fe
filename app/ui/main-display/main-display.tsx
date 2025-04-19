@@ -74,15 +74,9 @@ const MainDisplay: React.FC<MainDisplayProps> = ({ onUpload }) => {
     <div className="flex-1 flex flex-col bg-white p-6 overflow-hidden">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-gray-800">Learning Session</h1>
-        <Button
-          onClick={onUpload}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
-        >
-          Upload Materials
-        </Button>
       </div>
 
-      <div className="flex-1 overflow-y-auto border rounded-lg p-4 bg-gray-50">
+      <div className="flex-1 overflow-y-auto border rounded-lg p-4 bg-gray-50 flex items-center justify-center">
         {renderContent()}
       </div>
     </div>

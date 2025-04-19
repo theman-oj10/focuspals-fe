@@ -1,5 +1,7 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
+import { Upload } from 'lucide-react';
 import React from 'react';
 
 export default function DefaultDisplay({
@@ -8,18 +10,22 @@ export default function DefaultDisplay({
   onUpload?: () => void;
 }) {
   return (
-    <div className="flex-1 p-6 flex flex-col items-center justify-center">
-      <div className="text-center">
-        <div className="text-2xl text-gray-600 mb-4">
-          Add a source to get started
-        </div>
-        <button
-          className="bg-blue-500 text-white px-6 py-2 rounded"
-          onClick={onUpload}
-        >
-          Upload a source
-        </button>
+    <div className="flex h-full w-1/2 flex-col items-center justify-center p-8">
+      <div className="mb-6 text-center">
+        <h3 className="mb-2 text-2xl font-semibold text-gray-800">
+          Ready to get focused?
+        </h3>
+        <p className="text-gray-500">
+          Upload your learning materials to start a personalized learning
+          experience
+        </p>
       </div>
+      <Button
+        className="w-full bg-blue-600 py-6 text-lg font-medium text-white transition-all hover:bg-blue-700"
+        onClick={onUpload}
+      >
+        <Upload /> Upload Materials
+      </Button>
     </div>
   );
 }
