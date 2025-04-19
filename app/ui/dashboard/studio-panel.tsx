@@ -1,7 +1,7 @@
 import React from 'react';
 import Audio from './audio';
 import Notes from './notes';
-import VideoStream from '@/lib/video-stream';
+import VideoStream from './video-stream';
 
 export default function StudioPanel() {
     return (
