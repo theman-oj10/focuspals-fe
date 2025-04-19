@@ -7,7 +7,12 @@ import UploadArea from "@/app/ui/modal/upload-area"
 import SourceOptions from "@/app/ui/modal/source-options"
 import SourceLimit from "@/app/ui/modal/source-limit"
 
-export default function AddSourcesModal({ onClose }: { onClose?: () => void }) {
+interface AddSourcesModalProps {
+  onClose?: () => void;
+  onFilesUploaded?: (files: File[]) => void;
+}
+
+export default function AddSourcesModal({ onClose, onFilesUploaded }: AddSourcesModalProps) {
   // Add event listener for Escape key
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -29,6 +34,9 @@ export default function AddSourcesModal({ onClose }: { onClose?: () => void }) {
   const handleFilesSelected = (files: File[]) => {
     console.log("Files selected in parent:", files);
     // Here you would handle the files, perhaps upload them to a server
+    if (onFilesUploaded) {
+      onFilesUploaded(files);
+    }
   };
 
   return (
