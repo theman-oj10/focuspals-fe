@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Sidebar from '@/app/ui/dashboard/sidebar';
 import Chat from '@/app/ui/dashboard/chat';
 import StudioPanel from '@/app/ui/dashboard/studio-panel';
-import AddSourceModel from '@/app/ui/dashboard/add-source-model';
+import AddSourceModel from '@/app/ui/modal/add-source-model';
 
 export default function Dashboard() {
     const [showModal, setShowModal] = useState(false)
