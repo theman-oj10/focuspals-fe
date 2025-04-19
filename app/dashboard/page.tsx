@@ -1,13 +1,14 @@
 import React from 'react';
-import Sidebar from './(components)/sidebar';
-import Chat from './(components)/chat';
-import StudioPanel from './(components)/studio-panel';
+import Sidebar from '@/app/ui/dashboard/sidebar';
+import Chat from '@/app/ui/dashboard/chat';
+import StudioPanel from '@/app/ui/dashboard/studio-panel';
 
 export default function Dashboard() {
     return (
         <div className="flex h-screen bg-gray-50">
             {/* Left Sidebar */}
             <Sidebar />
+
             {/* Main Content Area */}
             <Chat />
 
