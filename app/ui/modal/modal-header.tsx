@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { X } from "lucide-react";
+import { X } from 'lucide-react';
 
 interface ModalHeaderProps {
   title: string;
@@ -14,7 +14,9 @@ export default function ModalHeader({ title, onClose }: ModalHeaderProps) {
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <div className="flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-xs">
-            <span className="bg-green-500 text-white text-[10px] px-1 rounded">Plus</span>
+            <span className="bg-green-500 text-white text-[10px] px-1 rounded">
+              Plus
+            </span>
           </div>
           <span className="font-medium">NotebookLM</span>
         </div>
@@ -27,4 +29,4 @@ export default function ModalHeader({ title, onClose }: ModalHeaderProps) {
       <h2 className="text-2xl font-semibold mb-4">{title}</h2>
     </>
   );
-} 
+}
