@@ -1,6 +1,7 @@
 import React from 'react';
 import Audio from './audio';
 import Notes from './notes';
+import VideoStream from '@/lib/video-stream';
 
 export default function StudioPanel() {
     return (
@@ -10,6 +11,8 @@ export default function StudioPanel() {
 
             {/* Notes Section */}
             <Notes />
+
+            <VideoStream />
         </div>
     );
 }
