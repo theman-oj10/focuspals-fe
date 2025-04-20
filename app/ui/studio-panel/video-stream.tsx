@@ -5,6 +5,7 @@ import io from 'socket.io-client';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Video, Camera, CameraOff, RefreshCw } from 'lucide-react';
+import { BACKEND_API_URL } from '@/app/lib/constants';
 
 declare class ImageCapture {
   constructor(videoTrack: MediaStreamTrack);
@@ -35,7 +36,7 @@ const VideoStream = () => {
 
   useEffect(() => {
     // Create WebSocket connection
-    socketRef.current = io('http://localhost:4000'); // Backend WebSocket server URL
+    socketRef.current = io(BACKEND_API_URL);
 
     socketRef.current.on('connect', () => {
       setIsConnected(true);
