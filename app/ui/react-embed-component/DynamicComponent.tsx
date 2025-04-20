@@ -250,6 +250,8 @@ const InteractiveDijkstraVisualizer: React.FC = () => {
     drawGraph(); // Redraw to show the edge being dragged
   };
 
+
+export default SimpleGame;
   return (
     <div style={styles.container}>
       <h2 style={styles.heading}>Interactive Dijkstra's Algorithm</h2>

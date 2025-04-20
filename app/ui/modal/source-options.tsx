@@ -54,33 +54,6 @@ export default function SourceOptions() {
         icon={<LinkIcon className="h-6 w-6 text-blue-500" />}
       />
 
-      {/* Website */}
-      <SourceOption
-        name="Website"
-        icon={
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <circle cx="12" cy="12" r="8" stroke="black" strokeWidth="2" />
-            <path
-              d="M12 4C14.5 7 15 9.5 15 12C15 14.5 14.5 17 12 20"
-              stroke="black"
-              strokeWidth="2"
-            />
-            <path
-              d="M12 4C9.5 7 9 9.5 9 12C9 14.5 9.5 17 12 20"
-              stroke="black"
-              strokeWidth="2"
-            />
-            <path d="M4 12H20" stroke="black" strokeWidth="2" />
-          </svg>
-        }
-      />
-
       {/* YouTube */}
       <SourceOption
         name="YouTube"
@@ -138,34 +111,6 @@ export default function SourceOptions() {
               stroke="black"
               strokeWidth="2"
               strokeLinecap="round"
-            />
-          </svg>
-        }
-      />
-
-      {/* Copied text */}
-      <SourceOption
-        name="Copied text"
-        icon={
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M8 5H6C4.89543 5 4 5.89543 4 7V19C4 20.1046 4.89543 21 6 21H16C17.1046 21 18 20.1046 18 19V18"
-              stroke="black"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-            <path
-              d="M15 3H9C7.89543 3 7 3.89543 7 5V15C7 16.1046 7.89543 17 9 17H19C20.1046 17 21 16.1046 21 15V9M15 3L21 9M15 3V9H21"
-              stroke="black"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
             />
           </svg>
         }
