@@ -57,8 +57,7 @@ export default function Dashboard() {
       {selectedFile ? (
         <TextViewer file={selectedFile} />
       ) : (
-        // <MainDisplay onUpload={() => setShowModal(true)} />
-        <ReactEmbedViewer />
+        <MainDisplay onUpload={() => setShowModal(true)} />
       )}
 
       {/* Right Studio Panel */}
