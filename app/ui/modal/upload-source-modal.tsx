@@ -5,7 +5,6 @@ import ModalHeader from '@/app/ui/modal/modal-header';
 import DiscoverSourcesButton from '@/app/ui/modal/discover-sources-button';
 import UploadArea from '@/app/ui/modal/upload-area';
 import SourceOptions from '@/app/ui/modal/source-options';
-import SourceLimit from '@/app/ui/modal/source-limit';
 
 interface UploadSourcesModalProps {
   onClose?: () => void;
@@ -33,6 +32,15 @@ export default function UploadSourcesModal({
     };
   }, [onClose]);
 
+  // Disable body scrolling when modal is open
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
+
   // Handle file selection from UploadArea
   const handleFilesSelected = (files: File[]) => {
     console.log('Files selected in parent:', files);
@@ -43,37 +51,30 @@ export default function UploadSourcesModal({
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-white text-black rounded-lg w-full max-w-3xl max-h-[90vh] overflow-auto">
-        <div className="p-6">
+    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 backdrop-blur-sm animate-fadeIn">
+      <div className="bg-white text-black rounded-xl w-full max-w-3xl max-h-[90vh] overflow-hidden shadow-2xl animate-slideUp">
+        <div className="p-7 h-full flex flex-col">
           {/* Modal Header */}
           <ModalHeader title="Upload sources" onClose={onClose} />
 
-          {/* Discover sources button */}
-          <DiscoverSourcesButton />
+          {/* Content Area - make this scrollable if needed, not the entire modal */}
+          <div className="flex-1 overflow-y-auto pr-1">
+            {/* Discover sources button */}
+            <div className="mt-5">
+              <DiscoverSourcesButton />
+            </div>
 
-          {/* Description */}
-          <div className="mb-6">
-            <p className="text-gray-700 mb-1">
-              Upload learning materials that you wish to absorb!
-            </p>
-            <p className="text-gray-500 text-sm">
-              (Examples: course reading, research notes, meeting transcripts,
-              sales documents, etc.)
-            </p>
+            {/* Upload Area */}
+            <UploadArea
+              onFilesSelected={handleFilesSelected}
+              onUploadComplete={onClose}
+            />
+
+            {/* Source Options */}
+            <div className="mt-6 mb-4">
+              <SourceOptions />
+            </div>
           </div>
-
-          {/* Upload Area */}
-          <UploadArea
-            onFilesSelected={handleFilesSelected}
-            onUploadComplete={onClose}
-          />
-
-          {/* Source Options */}
-          <SourceOptions />
-
-          {/* Source Limit */}
-          <SourceLimit current={0} max={300} />
         </div>
       </div>
     </div>
