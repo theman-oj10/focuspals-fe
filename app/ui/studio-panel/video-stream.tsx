@@ -14,12 +14,12 @@ declare class ImageCapture {
 }
 
 interface FocusData {
+  frame: string; // base64 image
   timestamp: number;
   focusStatus: string;
   movement: number;
   eyesDetected: boolean;
   faceDetected: boolean;
-  frame?: string; // base64 image
 }
 
 const VideoStream = () => {
@@ -33,12 +33,6 @@ const VideoStream = () => {
   const [displayMode, setDisplayMode] = useState<'processed' | 'raw'>(
     'processed'
   );
-
-  // Add this console log to verify when component mounts
-  useEffect(() => {
-    console.log("Available socket events the backend might emit:", 
-      socketRef.current?._callbacks ? Object.keys(socketRef.current._callbacks) : "Socket not initialized");
-  }, [isConnected]);
 
   useEffect(() => {
     let connectionTimeout: NodeJS.Timeout;
@@ -72,7 +66,6 @@ const VideoStream = () => {
       socketRef.current.on(
         'updateInfo',
         (data: FocusData & { processedImage: string }) => {
-          // console.log('Received data from server:', data);
           // Update focus data state
           setFocusData(data);
 
@@ -102,7 +95,7 @@ const VideoStream = () => {
   }, [displayMode]);
 
   const displayProcessedImage = (base64Image: string) => {
-    console.log("Displaying processed image:", base64Image);
+    console.log('Displaying processed image:', base64Image);
     if (!canvasRef.current) return;
 
     const ctx = canvasRef.current.getContext('2d');
@@ -126,9 +119,6 @@ const VideoStream = () => {
       );
     };
 
-    // Set the source to the base64 image
-    console.log("Displaying processed image:", base64Image);
-
     img.src = `data:image/jpeg;base64,${base64Image}`;
   };
 
@@ -149,7 +139,7 @@ const VideoStream = () => {
               canvasRef.current.width = videoRef.current.videoWidth;
               canvasRef.current.height = videoRef.current.videoHeight;
             }
-          }, 500); // Short delay to ensure video dimensions are available
+          }, 200); // Short delay to ensure video dimensions are available
         }
 
         // Capture video frames and send them to the server
@@ -247,20 +237,6 @@ const VideoStream = () => {
     setDisplayMode(prev => (prev === 'raw' ? 'processed' : 'raw'));
   };
 
-  // Helper function to get appropriate badge color based on focus status
-  const getFocusBadgeVariant = (status?: string) => {
-    switch (status) {
-      case 'Focused':
-        return 'default'; // Map 'success' to 'default'
-      case 'Distracted':
-        return 'outline'; // Map 'warning' to 'outline'
-      case 'Not Present':
-        return 'destructive';
-      default:
-        return 'secondary';
-    }
-  };
-
   return (
     <div className="relative aspect-video bg-gray-900 flex items-center justify-center rounded-lg overflow-hidden shadow-sm">
       {/* Raw video from camera - only shown in raw mode */}
@@ -311,32 +287,7 @@ const VideoStream = () => {
             Live
           </Badge>
         )}
-
-        {focusData && (
-          <Badge
-            variant={getFocusBadgeVariant(focusData.focusStatus)}
-            className="bg-black/50 border-none"
-          >
-            {focusData.focusStatus || 'Unknown'}
-          </Badge>
-        )}
       </div>
-
-      {/* Focus metrics */}
-      {focusData && isCameraActive && (
-        <div className="absolute top-12 left-3 p-2 bg-black/50 backdrop-blur-sm rounded-md text-white text-xs">
-          <div className="grid grid-cols-2 gap-x-4 gap-y-1">
-            <span>Face:</span>
-            <span>{focusData.faceDetected ? '✅' : '❌'}</span>
-
-            <span>Eyes:</span>
-            <span>{focusData.eyesDetected ? '✅' : '❌'}</span>
-
-            <span>Movement:</span>
-            <span>{focusData.movement.toFixed(2)}</span>
-          </div>
-        </div>
-      )}
 
       <div className="absolute bottom-3 right-3 flex gap-2">
         <Button
