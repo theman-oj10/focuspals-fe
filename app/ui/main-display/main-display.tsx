@@ -31,7 +31,7 @@ type ContentType =
 
 export default function MainDisplay({ onUpload }: MainDisplayProps) {
   const [currentContent, setCurrentContent] = useState<ContentUpdate>();
-  const [demoMode, setDemoMode] = useState(false);
+  const [demoMode, setDemoMode] = useState(true);
   const [selectedContentType, setSelectedContentType] =
     useState<ContentType>('default');
   const socketRef = useRef<any>(null);
@@ -94,12 +94,10 @@ export default function MainDisplay({ onUpload }: MainDisplayProps) {
         return <QuizContent data={SAMPLE_QUIZ_DATA.data} />;
       case 'minigame':
         return (
-          <ReactEmbedViewer
-            jsonPath="./app/ui/react-embed-component/SAMPLE_VISUALIZER_DATA.json"
-          />
+          <ReactEmbedViewer jsonPath="./app/ui/react-embed-component/SAMPLE_VISUALIZER_DATA.json" />
         );
       default:
-        return <TextContent data={'Unsupported content type'} />;
+        return <TextContent data={{ content: 'Unsupported content type' }} />;
     }
   };
 
@@ -129,28 +127,74 @@ export default function MainDisplay({ onUpload }: MainDisplayProps) {
               ></div>
             </div>
           </label>
-
-          {demoMode && (
-            <select
-              className="px-2 py-1 border border-gray-300 rounded-md bg-white text-gray-700"
-              value={selectedContentType}
-              onChange={e =>
-                handleContentTypeChange(e.target.value as ContentType)
-              }
-            >
-              <option value="default">Default</option>
-              <option value="text">Text</option>
-              <option value="flipcard">Flip Cards</option>
-              <option value="video">Video</option>
-              <option value="quiz">Quiz</option>
-              <option value="minigame">Mini Game</option>
-            </select>
-          )}
         </div>
       </div>
 
       <div className="flex-1 overflow-y-auto border rounded-lg p-4 bg-blue-50 border-blue-500 flex items-center justify-center">
         {renderContent()}
+      </div>
+
+      {/* DEMO MODE CONTROL BAR - MOVED TO BOTTOM */}
+      <div className="mt-4 flex flex-col items-center">
+        {/* Pills Button Selection */}
+        {demoMode && (
+          <div className="flex flex-wrap justify-center gap-4 mt-2">
+            <button
+              onClick={() => handleContentTypeChange('text')}
+              className={`flex items-center px-4 py-2 rounded-full border transition ${
+                selectedContentType === 'text'
+                  ? 'bg-blue-100 border-blue-600 text-blue-600'
+                  : 'bg-white border-gray-300 text-gray-700'
+              }`}
+            >
+              <span className="mr-2">📄</span> Text
+            </button>
+
+            <button
+              onClick={() => handleContentTypeChange('flipcard')}
+              className={`flex items-center px-4 py-2 rounded-full border transition ${
+                selectedContentType === 'flipcard'
+                  ? 'bg-blue-100 border-blue-600 text-blue-600'
+                  : 'bg-white border-gray-300 text-gray-700'
+              }`}
+            >
+              <span className="mr-2">🗂️</span> Flip Card
+            </button>
+
+            <button
+              onClick={() => handleContentTypeChange('quiz')}
+              className={`flex items-center px-4 py-2 rounded-full border transition ${
+                selectedContentType === 'quiz'
+                  ? 'bg-blue-100 border-blue-600 text-blue-600'
+                  : 'bg-white border-gray-300 text-gray-700'
+              }`}
+            >
+              <span className="mr-2">❓</span> Quiz
+            </button>
+
+            <button
+              onClick={() => handleContentTypeChange('video')}
+              className={`flex items-center px-4 py-2 rounded-full border transition ${
+                selectedContentType === 'video'
+                  ? 'bg-blue-100 border-blue-600 text-blue-600'
+                  : 'bg-white border-gray-300 text-gray-700'
+              }`}
+            >
+              <span className="mr-2">📷</span> Video
+            </button>
+
+            <button
+              onClick={() => handleContentTypeChange('minigame')}
+              className={`flex items-center px-4 py-2 rounded-full border transition ${
+                selectedContentType === 'minigame'
+                  ? 'bg-blue-100 border-blue-600 text-blue-600'
+                  : 'bg-white border-gray-300 text-gray-700'
+              }`}
+            >
+              <span className="mr-2">🗺️</span> Mini Map
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

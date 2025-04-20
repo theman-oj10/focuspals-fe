@@ -1,28 +1,23 @@
-import React from 'react';
+'use client';
 
-interface TextContentData {
-  title?: string;
-  content: string;
-}
+import React from 'react';
+import ReactMarkdown from 'react-markdown';
 
 interface TextContentProps {
-  data: TextContentData | string;
+  data: {
+    title?: string;
+    content: string;
+  };
 }
 
-export default function TextContent({
-  data,
-}: TextContentProps): React.ReactElement {
-  // Handle both string and object data formats
-  if (typeof data === 'string') {
-    return <div className="prose max-w-none">{data}</div>;
-  }
-
-  const { title, content } = data;
-
+export default function TextContent({ data }: TextContentProps) {
   return (
-    <div className="w-full max-w-3xl mx-auto justify-baseline">
-      {title && <h2 className="text-xl font-bold mb-4">{title}</h2>}
-      <div className="prose max-w-none">{content}</div>
+    <div className="w-full h-full max-w-3xl mx-auto p-6 overflow-auto">
+      {data.title && <h1 className="text-2xl font-bold mb-6">{data.title}</h1>}
+
+      <div className="prose prose-blue max-w-none">
+        <ReactMarkdown>{data.content}</ReactMarkdown>
+      </div>
     </div>
   );
 }
