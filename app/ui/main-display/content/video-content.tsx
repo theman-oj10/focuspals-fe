@@ -6,11 +6,14 @@ export default function VideoContent() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   return (
-    <div className="relative w-full max-w-4xl mx-auto my-8 px-4">
-      <div className="bg-gray-900 p-4 rounded-xl shadow-2xl overflow-hidden">
+    <div className="w-full h-full flex items-center justify-center p-4">
+      <div
+        className="bg-gray-900 rounded-xl shadow-lg overflow-hidden max-h-full"
+        style={{ aspectRatio: '9/16' }}
+      >
         <video
           ref={videoRef}
-          className="w-full max-h-[90vh] object-contain rounded-md"
+          className="w-full h-full object-contain"
           controls
           autoPlay
           loop
