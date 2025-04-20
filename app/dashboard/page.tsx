@@ -12,30 +12,55 @@ export default function Dashboard() {
   const [showModal, setShowModal] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined);
+  const [articleContent, setArticleContent] = useState('');
+  const [flashcardsContent, setFlashcardsContent] = useState('');
+  const [miniGameContent, setMiniGameContent] = useState('');
+  const [quizContent, setQuizContent] = useState('');
+  const [reactComponentContent, setReactComponentContent] = useState('');
+  const [tiktokScriptContent, setTiktokScriptContent] = useState('');
 
-  useEffect(() => {
-    const processFile = async () => {
-      console.log(selectedFile);
-      if (!selectedFile) return;
-
-      try {
-        const response = await sendFile(
-          selectedFile,
-          'http://127.0.0.1:2000/api/process-file'
-        );
-        const data = await response.json();
-        console.log('File processed:', data);
-      } catch (error) {
-        console.error('Error processing file:', error);
-      }
-    };
-
-    processFile();
-  }, [selectedFile]);
-
-  const handleFileUpload = (files: File[]) => {
+  
+  const handleFileUpload = async (files: File[]) => {
     setUploadedFiles(prev => [...prev, ...files]);
-    setSelectedFile(files[files.length - 1]);
+    const latestFile = files[files.length - 1];
+    setSelectedFile(latestFile);
+
+    try {
+      const formData = new FormData();
+      formData.append('file', latestFile);
+      
+      const response = await fetch('http://127.0.0.1:5001/process-pdf', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      const data = await response.json();
+      
+      // Store different content types from the response
+      if (data.status === 'success') {
+        const {
+          article_content,
+          flashcards_content,
+          mini_game_content,
+          quiz_content,
+          react_component_content,
+          tiktok_script_content
+        } = data.data;
+        
+        setArticleContent(article_content);
+        setFlashcardsContent(flashcards_content);
+        setMiniGameContent(mini_game_content);
+        setQuizContent(quiz_content);
+        setReactComponentContent(react_component_content);
+        setTiktokScriptContent(tiktok_script_content);
+        console.log(articleContent);
+      }
+    } catch (error) {
+      console.error('Error processing file:', error);
+    }
   };
 
   const handleFileView = (file: File) => {
