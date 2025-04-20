@@ -13,7 +13,8 @@ import FlipCardContent from './content/flip-card-content';
 // import QuizContent from './content/quiz-content';
 // import MiniGameContent from './content/mini-game-content';
 
-import { SAMPLE_FLIP_CARD_DATA } from '@/app/lib/sample-data';
+import { SAMPLE_FLIP_CARD_DATA, SAMPLE_QUIZ_DATA } from '@/app/lib/sample-data';
+import QuizContent from './content/quiz-content';
 
 // Sample text content
 const SAMPLE_TEXT_DATA = {
@@ -107,8 +108,8 @@ export default function MainDisplay({ onUpload }: MainDisplayProps) {
       //   return <VideoContent data={contentToRender.data} />;
       // case 'audio':
       //   return <AudioContent data={contentToRender.data} />;
-      // case 'quiz':
-      //   return <QuizContent data={contentToRender.data} />;
+      case 'quiz':
+        return <QuizContent data={SAMPLE_QUIZ_DATA.data} />;
       // case 'minigame':
       //   return <MiniGameContent data={contentToRender.data} />;
       default:
@@ -154,11 +155,10 @@ export default function MainDisplay({ onUpload }: MainDisplayProps) {
               <option value="default">Default</option>
               <option value="text">Text</option>
               <option value="flipcard">Flip Cards</option>
-              {/* Add more options as you develop more components */}
               {/* <option value="diagram">Diagram</option> */}
               {/* <option value="video">Video</option> */}
               {/* <option value="audio">Audio</option> */}
-              {/* <option value="quiz">Quiz</option> */}
+              <option value="quiz">Quiz</option>
               {/* <option value="minigame">Mini Game</option> */}
             </select>
           )}
