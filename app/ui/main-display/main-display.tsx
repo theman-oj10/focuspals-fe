@@ -47,7 +47,7 @@ const MainDisplay: React.FC<MainDisplayProps> = ({ onUpload }) => {
   // Render the appropriate component based on content type
   const renderContent = () => {
     if (!currentContent) {
-      return <DefaultDisplay />;
+      return <DefaultDisplay onUpload={onUpload} />;
     }
 
     switch (currentContent.type) {

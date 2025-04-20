@@ -1,13 +1,21 @@
 'use client';
 
 import { useEffect } from 'react';
-import ModalHeader from './components/modal-header';
-import DiscoverSourcesButton from './components/discover-sources-button';
-import UploadArea from './components/upload-area';
-import SourceOptions from './components/source-options';
-import SourceLimit from './components/source-limit';
+import ModalHeader from '@/app/ui/modal/modal-header';
+import DiscoverSourcesButton from '@/app/ui/modal/discover-sources-button';
+import UploadArea from '@/app/ui/modal/upload-area';
+import SourceOptions from '@/app/ui/modal/source-options';
+import SourceLimit from '@/app/ui/modal/source-limit';
 
-export default function AddSourcesModal({ onClose }: { onClose?: () => void }) {
+interface UploadSourcesModalProps {
+  onClose?: () => void;
+  handleFileUpload?: (files: File[]) => void;
+}
+
+export default function UploadSourcesModal({
+  onClose,
+  handleFileUpload,
+}: UploadSourcesModalProps) {
   // Add event listener for Escape key
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -29,6 +37,9 @@ export default function AddSourcesModal({ onClose }: { onClose?: () => void }) {
   const handleFilesSelected = (files: File[]) => {
     console.log('Files selected in parent:', files);
     // Here you would handle the files, perhaps upload them to a server
+    if (handleFileUpload) {
+      handleFileUpload(files);
+    }
   };
 
   return (
