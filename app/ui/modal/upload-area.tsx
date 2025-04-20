@@ -91,15 +91,27 @@ export default function UploadArea({
     }, 2000);
   };
 
+  // Handle click on the entire component
+  const handleCardClick = () => {
+    if (!uploading) {
+      fileInputRef.current?.click();
+    }
+  };
+
   return (
     <Card
       className={`border border-dashed ${
         isDragging ? 'border-blue-500 bg-blue-50' : 'border-gray-300 bg-gray-50'
-      } rounded-lg p-12 mb-6 transition-colors`}
+      } rounded-lg p-12 mb-6 transition-colors ${
+        !uploading
+          ? 'cursor-pointer hover:border-blue-400 hover:bg-blue-50/50'
+          : ''
+      }`}
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
       onDragOver={handleDragOver}
       onDrop={handleDrop}
+      onClick={handleCardClick}
     >
       <div className="flex flex-col items-center justify-center text-center">
         <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center mb-4">
@@ -112,13 +124,8 @@ export default function UploadArea({
           ) : (
             <>
               Drag & drop or{' '}
-              <span
-                className="text-blue-500 cursor-pointer"
-                onClick={() => fileInputRef.current?.click()}
-              >
-                choose file
-              </span>{' '}
-              to upload
+              <span className="text-blue-500 font-medium">choose file</span> to
+              upload
             </>
           )}
         </p>
@@ -138,7 +145,7 @@ export default function UploadArea({
 
         {/* Show files being uploaded if any */}
         {files.length > 0 && (
-          <div className="mt-4 w-full">
+          <div className="mt-4 w-full" onClick={e => e.stopPropagation()}>
             {files.map((file, index) => (
               <div
                 key={index}

@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import Sidebar from '@/app/ui/dashboard/sidebar';
-import StudioPanel from '@/app/ui/dashboard/studio-panel';
-import AddSourceModal from '@/app/ui/modal/upload-source-modal';
-import TextViewer from '@/app/ui/text-component/text-viewer';
+import React, { useEffect, useState } from 'react';
+import Sidebar from '@/app/ui/sidebar/sidebar';
+import StudioPanel from '@/app/ui/studio-panel/studio-panel';
+import UploadSourcesModal from '@/app/ui/modal/upload-source-modal';
+import TextViewer from '@/app/ui/sidebar/text-viewer';
 import MainDisplay from '@/app/ui/main-display/main-display';
 import { sendFile } from '../services/send-file';
 import ReactEmbedViewer from '@/app/ui/react-embed-component/react-embed-viewer';
@@ -18,16 +18,19 @@ export default function Dashboard() {
     const processFile = async () => {
       console.log(selectedFile);
       if (!selectedFile) return;
-      
+
       try {
-        const response = await sendFile(selectedFile, 'http://127.0.0.1:2000/api/process-file');
+        const response = await sendFile(
+          selectedFile,
+          'http://127.0.0.1:2000/api/process-file'
+        );
         const data = await response.json();
         console.log('File processed:', data);
       } catch (error) {
         console.error('Error processing file:', error);
       }
     };
-    
+
     processFile();
   }, [selectedFile]);
 
@@ -63,7 +66,7 @@ export default function Dashboard() {
 
       {/* Upload Source Modal */}
       {showModal && (
-        <AddSourceModal
+        <UploadSourcesModal
           onClose={() => setShowModal(false)}
           handleFileUpload={handleFileUpload}
         />

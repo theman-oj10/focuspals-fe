@@ -1,5 +1,6 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
 import { X } from 'lucide-react';
 
 interface ModalHeaderProps {
@@ -11,15 +12,17 @@ export default function ModalHeader({ title, onClose }: ModalHeaderProps) {
   return (
     <>
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between py-4 border-b border-gray-200">
         {/* Title */}
-        <h2 className="text-2xl font-semibold">{title}</h2>
-        <button
+        <h2 className="text-xl font-semibold text-gray-800">{title}</h2>
+        <Button
           onClick={onClose}
-          className="text-gray-500 hover:text-black -mt-[30px]"
+          variant="ghost"
+          className="rounded-sm p-2 h-auto hover:bg-gray-100 transition-colors bg-gray-50"
+          aria-label="Close"
         >
-          <X size={20} />
-        </button>
+          <X size={18} />
+        </Button>
       </div>
     </>
   );
