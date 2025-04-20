@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
-import io from 'socket.io-client';
+import { BACKEND_API_URL } from '@/app/lib/constants';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Video, Camera, CameraOff, RefreshCw } from 'lucide-react';
-import { BACKEND_API_URL } from '@/app/lib/constants';
+import { Camera, CameraOff, RefreshCw, Video } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import io from 'socket.io-client';
 
 declare class ImageCapture {
   constructor(videoTrack: MediaStreamTrack);
@@ -19,7 +19,7 @@ interface FocusData {
   movement: number;
   eyesDetected: boolean;
   faceDetected: boolean;
-  processedImage?: string; // base64 image
+  frame?: string; // base64 image
 }
 
 const VideoStream = () => {
@@ -33,6 +33,12 @@ const VideoStream = () => {
   const [displayMode, setDisplayMode] = useState<'processed' | 'raw'>(
     'processed'
   );
+
+  // Add this console log to verify when component mounts
+  useEffect(() => {
+    console.log("Available socket events the backend might emit:", 
+      socketRef.current?._callbacks ? Object.keys(socketRef.current._callbacks) : "Socket not initialized");
+  }, [isConnected]);
 
   useEffect(() => {
     let connectionTimeout: NodeJS.Timeout;
@@ -66,13 +72,13 @@ const VideoStream = () => {
       socketRef.current.on(
         'updateInfo',
         (data: FocusData & { processedImage: string }) => {
-          console.log('Received data from server:', data);
+          // console.log('Received data from server:', data);
           // Update focus data state
           setFocusData(data);
 
           // Display the processed image on canvas
-          if (data.processedImage && displayMode === 'processed') {
-            displayProcessedImage(data.processedImage);
+          if (data.frame && displayMode === 'processed') {
+            displayProcessedImage(data.frame);
           }
         }
       );
@@ -96,6 +102,7 @@ const VideoStream = () => {
   }, [displayMode]);
 
   const displayProcessedImage = (base64Image: string) => {
+    console.log("Displaying processed image:", base64Image);
     if (!canvasRef.current) return;
 
     const ctx = canvasRef.current.getContext('2d');
@@ -120,6 +127,8 @@ const VideoStream = () => {
     };
 
     // Set the source to the base64 image
+    console.log("Displaying processed image:", base64Image);
+
     img.src = `data:image/jpeg;base64,${base64Image}`;
   };
 
