@@ -24,12 +24,12 @@ export default function UploadArea({
     if (event.target.files && event.target.files.length > 0) {
       const newFiles = Array.from(event.target.files);
       setFiles([...files, ...newFiles]);
-      
+
       // Notify parent component
       if (onFilesSelected) {
         onFilesSelected([...files, ...newFiles]);
       }
-      
+
       // For demo purposes, simulate upload
       handleFileUpload([...files, ...newFiles]);
     }
@@ -64,7 +64,7 @@ export default function UploadArea({
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
       const newFiles = Array.from(e.dataTransfer.files);
       setFiles([...files, ...newFiles]);
-      
+
       // Notify parent component
       if (onFilesSelected) {
         onFilesSelected([...files, ...newFiles]);
@@ -82,7 +82,7 @@ export default function UploadArea({
     // This is just a simulation for demo purposes
     setTimeout(() => {
       setUploading(false);
-      console.log("Files uploaded:", filesToUpload);
+      console.log('Files uploaded:', filesToUpload);
 
       // Call onUploadComplete to close the modal
       if (onUploadComplete) {
@@ -148,10 +148,6 @@ export default function UploadArea({
                   <FileText className="h-4 w-4 mr-2 text-blue-500" />
                   <span className="text-sm">{file.name}</span>
                 </div>
-                <span className="text-xs text-gray-500">{Math.round(file.size / 1024)} KB</span>
-              </div>
-            ))}
-            {uploading && <Progress value={50} className="h-2 w-full mt-2 bg-gray-100" />}
                 <span className="text-xs text-gray-500">
                   {Math.round(file.size / 1024)} KB
                 </span>

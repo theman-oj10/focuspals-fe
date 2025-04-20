@@ -39,7 +39,9 @@ export async function sendFile(
     });
 
     if (!response.ok) {
-      throw new Error(`Upload failed: ${response.status} ${response.statusText}`);
+      throw new Error(
+        `Upload failed: ${response.status} ${response.statusText}`
+      );
     }
 
     return response;

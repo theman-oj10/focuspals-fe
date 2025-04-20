@@ -1,21 +1,21 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FileText } from "lucide-react";
+import React, { useState, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { FileText } from 'lucide-react';
 
 interface TextViewerProps {
   file?: File;
 }
 
 export default function TextViewer({ file }: TextViewerProps) {
-  const [content, setContent] = useState<string>("");
+  const [content, setContent] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!file) return;
-    
+
     // Only process text files
     if (!file.name.endsWith('.txt') && file.type !== 'text/plain') {
       setError('Only text files are supported in this viewer');
@@ -25,7 +25,7 @@ export default function TextViewer({ file }: TextViewerProps) {
     const readFile = async () => {
       setLoading(true);
       setError(null);
-      
+
       try {
         const text = await file.text();
         setContent(text);

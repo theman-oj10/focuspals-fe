@@ -10,9 +10,9 @@ export default function StudioPanel() {
       <Audio />
 
       {/* Notes Section */}
-       <Notes />
+      <Notes />
 
-       <VideoStream />
+      <VideoStream />
     </div>
   );
 }

@@ -1,33 +1,33 @@
-"use client"
+'use client';
 
-import { useEffect } from "react"
-import ModalHeader from "./components/modal-header"
-import DiscoverSourcesButton from "./components/discover-sources-button"
-import UploadArea from "./components/upload-area"
-import SourceOptions from "./components/source-options"
-import SourceLimit from "./components/source-limit"
+import { useEffect } from 'react';
+import ModalHeader from './components/modal-header';
+import DiscoverSourcesButton from './components/discover-sources-button';
+import UploadArea from './components/upload-area';
+import SourceOptions from './components/source-options';
+import SourceLimit from './components/source-limit';
 
 export default function AddSourcesModal({ onClose }: { onClose?: () => void }) {
   // Add event listener for Escape key
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && onClose) {
+      if (event.key === 'Escape' && onClose) {
         onClose();
       }
     };
 
     // Add event listener
-    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener('keydown', handleKeyDown);
 
     // Clean up
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener('keydown', handleKeyDown);
     };
   }, [onClose]);
 
   // Handle file selection from UploadArea
   const handleFilesSelected = (files: File[]) => {
-    console.log("Files selected in parent:", files);
+    console.log('Files selected in parent:', files);
     // Here you would handle the files, perhaps upload them to a server
   };
 
@@ -47,13 +47,14 @@ export default function AddSourcesModal({ onClose }: { onClose?: () => void }) {
               Upload learning materials that you wish to absorb!
             </p>
             <p className="text-gray-500 text-sm">
-              (Examples: course reading, research notes, meeting transcripts, sales documents, etc.)
+              (Examples: course reading, research notes, meeting transcripts,
+              sales documents, etc.)
             </p>
           </div>
 
           {/* Upload Area */}
-          <UploadArea 
-            onFilesSelected={handleFilesSelected} 
+          <UploadArea
+            onFilesSelected={handleFilesSelected}
             onUploadComplete={onClose}
           />
 
@@ -65,5 +66,5 @@ export default function AddSourcesModal({ onClose }: { onClose?: () => void }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
