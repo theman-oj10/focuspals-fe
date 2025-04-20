@@ -75,20 +75,23 @@ export default function Dashboard() {
       };
 
       // Assign type and data based on focus score
-      if (focusScore > 80) {
-        contentData.type = 'text';
-        contentData.data = SAMPLE_TEXT_DATA.data;
-      } else if (focusScore > 60) {
-        contentData.type = 'flipcard';
-        contentData.data = SAMPLE_FLIP_CARD_DATA.data;
-      } else if (focusScore > 40) {
-        contentData.type = 'tiktok';
-      } else if (focusScore > 20) {
-        contentData.type = 'quiz';
-        contentData.data = SAMPLE_QUIZ_DATA.data;
-      } else {
-        contentData.type = 'react';
-      }
+      // if (focusScore > 80) {
+      //   contentData.type = 'text';
+      //   contentData.data = SAMPLE_TEXT_DATA.data;
+      // } else if (focusScore > 60) {
+      //   contentData.type = 'flipcard';
+      //   contentData.data = SAMPLE_FLIP_CARD_DATA.data;
+      // } else if (focusScore > 40) {
+      //   contentData.type = 'tiktok';
+      // } else if (focusScore > 20) {
+      //   contentData.type = 'quiz';
+      //   contentData.data = SAMPLE_QUIZ_DATA.data;
+      // } else {
+      //   contentData.type = 'react';
+      // }
+
+      contentData.type = 'text';
+      contentData.data = SAMPLE_TEXT_DATA.data;
 
       console.log('Content data:', contentData);
       setCurrentData(contentData);
@@ -171,7 +174,7 @@ export default function Dashboard() {
       if (!currentData) return;
 
       // Determine new content type based on attention level
-      let newType = '';
+      let newType = 'text';
       if (attentionLevel > 80) {
         newType = 'text';
       } else if (attentionLevel > 60) {

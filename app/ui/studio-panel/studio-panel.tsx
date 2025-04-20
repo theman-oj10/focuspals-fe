@@ -16,7 +16,8 @@ export interface StudioPanelProps {
   className?: string;
 }
 
-export default function StudioPanel({onAttentionChange,
+export default function StudioPanel({
+  onAttentionChange,
   isContentLoaded,
   currentContentType,
   className = '',
@@ -110,7 +111,11 @@ export default function StudioPanel({onAttentionChange,
         <div className="flex-grow overflow-y-auto p-6">
           {activeTab === 'focus' && (
             <div className="flex flex-col h-full space-y-6">
-              <AttentionLevelTracker />
+              <AttentionLevelTracker
+            onAttentionChange={onAttentionChange}
+            isContentLoaded={isContentLoaded}
+            currentContentType={currentContentType}
+          />
               <div className="mt-6">
                 <VideoStream />
               </div>

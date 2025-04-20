@@ -136,26 +136,48 @@ export default function MainDisplay({
   }
 
   return (
-    <div className={`flex-grow flex flex-col ${focusMode ? 'max-w-4xl mx-auto' : ''}`}>
-      <div className="p-4 border-b border-gray-200">
+    <div className={`flex-grow flex flex-col h-full p-6 ${focusMode ? 'max-w-4xl mx-auto' : ''}`}>
+      <div className="p-4 border-b border-gray-200 flex justify-between items-center shrink-0">
         <h2 className="font-bold text-xl">Learning Session</h2>
-        {/* You can show a "Focus Mode Active" badge here when in focus mode */}
-        {focusMode && (
-          <span className="ml-2 bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
-            Focus Mode Active
-          </span>
-        )}
+        
+        <div className="flex items-center space-x-4">
+          <label className="flex items-center cursor-pointer">
+            <span className="mr-2 text-sm text-gray-700">Demo Mode</span>
+            <div
+              className={`relative inline-block w-10 h-6 rounded-full transition-colors duration-200 ease-in-out ${
+                demoMode ? 'bg-blue-600' : 'bg-gray-300'
+              }`}
+            >
+              <input
+                type="checkbox"
+                className="opacity-0 absolute w-full h-full"
+                checked={demoMode}
+                onChange={() => setDemoMode(!demoMode)}
+              />
+              <div
+                className={`absolute left-1 top-1 w-4 h-4 rounded-full bg-white transition-transform duration-200 ease-in-out ${
+                  demoMode ? 'transform translate-x-4' : ''
+                }`}
+              ></div>
+            </div>
+          </label>
+          {focusMode && (
+            <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
+              Focus Mode Active
+            </span>
+          )}
+        </div>
       </div>
 
-      <div className="flex-grow p-4 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto p-4 h-full">
         {/* Content area */}
         {isLoading ? (
-          <div className="flex justify-center items-center h-full">
+          <div className="flex justify-center items-center p-6">
             <p>Loading content...</p>
           </div>
-        ) : contentData ? (
+        ) : contentData || demoMode ? (
           // Render your content here based on contentData
-          <div className="h-full">
+          <div className="h-full overflow-y-auto">
             {renderContent()}
           </div>
         ) : (
@@ -175,17 +197,10 @@ export default function MainDisplay({
         )}
       </div>
       
-      {/* When in focus mode, show a small exit button at the bottom */}
-      {focusMode && (
-        <div className="text-center p-4 text-sm text-gray-500">
-          Press ESC or click the button in the top-right to exit focus mode
-        </div>
-      )}
-
-      <div className="mt-4 flex flex-col items-center">
-        {/* Pills Button Selection */}
-        {demoMode && (
-          <div className="flex flex-wrap justify-center gap-4 mt-2">
+      {/* Demo mode pill buttons - moved to bottom and marked as shrink-0 */}
+      {demoMode && (
+        <div className="p-4 border-t border-gray-200 shrink-0">
+          <div className="flex flex-wrap justify-center gap-4">
             <button
               onClick={() => handleContentTypeChange('text')}
               className={`flex items-center px-4 py-2 rounded-full border transition ${
@@ -238,11 +253,18 @@ export default function MainDisplay({
                   : 'bg-white border-gray-300 text-gray-700'
               }`}
             >
-              <span className="mr-2">🗺️</span> Mini Map
+              <span className="mr-2">🗺️</span> Interactive Diagram
             </button>
           </div>
-        )}
-      </div>
+        </div>
+      )}
+      
+      {/* When in focus mode, show a small exit button at the bottom */}
+      {focusMode && (
+        <div className="text-center p-4 text-sm text-gray-500 shrink-0">
+          Press ESC or click the button in the top-right to exit focus mode
+        </div>
+      )}
     </div>
   );
 }
