@@ -75,7 +75,7 @@ const MainDisplay: React.FC<MainDisplayProps> = ({ onUpload }) => {
         <h1 className="text-2xl font-bold text-gray-800">Learning Session</h1>
       </div>
 
-      <div className="flex-1 overflow-y-auto border rounded-lg p-4 bg-gray-50 flex items-center justify-center">
+      <div className="flex-1 overflow-y-auto border rounded-lg p-4 bg-blue-50 border-blue-500 flex items-center justify-center">
         {renderContent()}
       </div>
     </div>
