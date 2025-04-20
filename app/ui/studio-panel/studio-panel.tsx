@@ -7,11 +7,18 @@ import SessionTimer from './session-timer';
 import { Activity, Trophy } from 'lucide-react';
 
 export interface StudioPanelProps {
-  focusScore?: number;
-  className?: string;
+  onAttentionChange?: (attentionData: {
+    attentionLevel: number;
+    shouldSwitchContent: boolean;
+  }) => void;
+  isContentLoaded?: boolean;
+  currentContentType?: string;
 }
 
-export default function StudioPanel({ focusScore, className = '' }: StudioPanelProps) {
+export default function StudioPanel({onAttentionChange,
+  isContentLoaded,
+  currentContentType,
+}: StudioPanelProps) {
   const [activeTab, setActiveTab] = useState('focus'); // 'focus' or 'gamification'
 
   return (
@@ -55,11 +62,13 @@ export default function StudioPanel({ focusScore, className = '' }: StudioPanelP
       <div className="flex-grow overflow-y-auto p-6">
         {activeTab === 'focus' && (
           <div className="flex flex-col h-full space-y-6">
-            <AttentionLevelTracker />
-            <div className="mt-6">
-              <VideoStream />
-            </div>
-            <AttentionChart />
+            <AttentionLevelTracker
+            onAttentionChange={onAttentionChange}
+            isContentLoaded={isContentLoaded}
+            currentContentType={currentContentType}
+          />
+          <AttentionChart />
+          <VideoStream />
           </div>
         )}
         
