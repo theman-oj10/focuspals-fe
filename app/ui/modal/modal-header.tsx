@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { X } from "lucide-react";
+import { X } from 'lucide-react';
 
 interface ModalHeaderProps {
   title: string;
@@ -20,4 +20,4 @@ export default function ModalHeader({ title, onClose }: ModalHeaderProps) {
       </div>
     </>
   );
-} 
+}

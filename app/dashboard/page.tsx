@@ -1,8 +1,7 @@
-"use client";
+'use client';
 
 import React, { useState } from 'react';
 import Sidebar from '@/app/ui/dashboard/sidebar';
-import Chat from '@/app/ui/dashboard/chat';
 import StudioPanel from '@/app/ui/dashboard/studio-panel';
 import AddSourceModel from '@/app/ui/modal/add-source-modal';
 import TextViewer from '@/app/ui/text-component/text-viewer';
@@ -37,12 +36,12 @@ export default function Dashboard() {
                     <TextViewer file={selectedFile} />
                 </div>
             ) : (
-                <Chat onUpload={() => setShowModal(true)} />
+                 {/* <Chat onUpload={() => setShowModal(true)} /> */}
+                 <MainDisplay onUpload={() => setShowModal(true)} />
             )}
 
-            {/* Right Studio Panel */}
-            <StudioPanel />
-
+      {/* Right Studio Panel */}
+      <StudioPanel />
             {showModal && (
                 <AddSourceModel 
                     onClose={() => setShowModal(false)} 

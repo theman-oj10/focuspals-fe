@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { FileText } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
+import { FileText } from 'lucide-react';
+import { Progress } from '@/components/ui/progress';
 
 interface SourceLimitProps {
   current: number;
