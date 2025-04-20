@@ -303,12 +303,14 @@ export default function Dashboard() {
         />
       </div>
 
-      {/* Right Studio Panel */}
-      <StudioPanel
-        onAttentionChange={handleAttentionChange}
-        isContentLoaded={contentLoaded}
-        currentContentType={currentData?.type || ''}
-      />
+      {/* Right Studio Panel - Hide completely when in focus mode */}
+      {!focusMode && (
+        <StudioPanel
+          onAttentionChange={handleAttentionChange}
+          isContentLoaded={contentLoaded}
+          currentContentType={currentData?.type || ''}
+        />
+      )}
 
       {/* Upload Source Modal */}
       {showModal && (
