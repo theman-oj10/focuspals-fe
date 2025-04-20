@@ -2,7 +2,7 @@
 
 import { useRef } from 'react';
 
-export default function VideoViewer() {
+export default function VideoContent() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   return (
