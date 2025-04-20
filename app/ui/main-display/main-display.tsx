@@ -6,13 +6,12 @@ import io from 'socket.io-client';
 import TextContent from './content/text-content';
 import DefaultDisplay from './default-display';
 import FlipCardContent from './content/flip-card-content';
+import ReactEmbedViewer from '../react-embed-component/react-embed-viewer';
 // Import other content components as you develop them
 // import DiagramContent from './content/diagram-content';
 // import VideoContent from './content/video-content';
 // import AudioContent from './content/audio-content';
-// import QuizContent from './content/quiz-content';
 // import MiniGameContent from './content/mini-game-content';
-
 import { SAMPLE_FLIP_CARD_DATA, SAMPLE_QUIZ_DATA } from '@/app/lib/sample-data';
 import QuizContent from './content/quiz-content';
 
@@ -110,8 +109,8 @@ export default function MainDisplay({ onUpload }: MainDisplayProps) {
       //   return <AudioContent data={contentToRender.data} />;
       case 'quiz':
         return <QuizContent data={SAMPLE_QUIZ_DATA.data} />;
-      // case 'minigame':
-      //   return <MiniGameContent data={contentToRender.data} />;
+      case 'minigame':
+        return <ReactEmbedViewer jsonPath={"/Users/samuel/dev/focuspals-fe/app/ui/react-embed-component/SAMPLE_VISUALIZER_DATA.json"}/>;
       default:
         return <TextContent data={'Unsupported content type'} />;
     }
@@ -159,7 +158,7 @@ export default function MainDisplay({ onUpload }: MainDisplayProps) {
               {/* <option value="video">Video</option> */}
               {/* <option value="audio">Audio</option> */}
               <option value="quiz">Quiz</option>
-              {/* <option value="minigame">Mini Game</option> */}
+              <option value="minigame">Mini Game</option>
             </select>
           )}
         </div>
