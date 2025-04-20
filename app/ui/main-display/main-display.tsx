@@ -1,10 +1,9 @@
 'use client';
 
 import { ContentUpdate } from '@/app/lib/definitions';
-import { Button } from '@/components/ui/button';
 import React, { useEffect, useState, useRef } from 'react';
 import io from 'socket.io-client';
-import TextContent from './text-content';
+import TextContent from './content/text-content';
 import DefaultDisplay from './default-display';
 // import TextContent from './content/text-content';
 // import DiagramContent from './content/diagram-content';

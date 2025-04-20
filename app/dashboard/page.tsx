@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import Sidebar from '@/app/ui/dashboard/sidebar';
-import StudioPanel from '@/app/ui/dashboard/studio-panel';
-import AddSourceModal from '@/app/ui/modal/upload-source-modal';
-import TextViewer from '@/app/ui/text-component/text-viewer';
+import Sidebar from '@/app/ui/sidebar/sidebar';
+import StudioPanel from '@/app/ui/studio-panel/studio-panel';
+import UploadSourcesModal from '@/app/ui/modal/upload-source-modal';
+import TextViewer from '@/app/ui/sidebar/text-viewer';
 import MainDisplay from '@/app/ui/main-display/main-display';
 
 export default function Dashboard() {
@@ -43,7 +43,7 @@ export default function Dashboard() {
 
       {/* Upload Source Modal */}
       {showModal && (
-        <AddSourceModal
+        <UploadSourcesModal
           onClose={() => setShowModal(false)}
           handleFileUpload={handleFileUpload}
         />
