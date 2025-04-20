@@ -17,7 +17,7 @@ function ReactEmbedViewer({ jsonPath }: ReactEmbedViewerProps) {
     const processComponent = async () => {
       try {
         // Get paths for the JSON and output TSX file
-        const outputPath = "/Users/samuel/dev/focuspals-fe/app/ui/react-embed-component/DynamicComponent.tsx";
+        const outputPath = "./app/ui/react-embed-component/DynamicComponent.tsx";
         
         // Convert the JSON to TSX
         const result = await extractComponentToTsx(jsonPath, outputPath);

@@ -95,9 +95,7 @@ export default function MainDisplay({ onUpload }: MainDisplayProps) {
       case 'minigame':
         return (
           <ReactEmbedViewer
-            jsonPath={
-              '/Users/evanyan13/2025/focuspals-fe/app/ui/react-embed-component/SAMPLE_VISUALIZER_DATA.json'
-            }
+            jsonPath="./app/ui/react-embed-component/SAMPLE_VISUALIZER_DATA.json"
           />
         );
       default:

@@ -33,15 +33,10 @@ const InteractiveDijkstraVisualizer: React.FC = () => {
   const [path, setPath] = useState<{ [key: string]: string | null }>({});
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
-  const [dragOffset, setDragOffset] = useState<{ x: number; y: number } | null>(
-    null
-  );
+  const [dragOffset, setDragOffset] = useState<{ x: number; y: number } | null>(null);
   const [newEdgeStartNode, setNewEdgeStartNode] = useState<string | null>(null);
   const [newEdgeEndNode, setNewEdgeEndNode] = useState<string | null>(null);
   const [newEdgeWeight, setNewEdgeWeight] = useState<number | ''>('');
-
-  // Reference for tracking mouse position
-  const mousePosition = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     drawGraph();
@@ -57,9 +52,9 @@ const InteractiveDijkstraVisualizer: React.FC = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Draw edges
-    edges.forEach(edge => {
-      const fromNode = nodes.find(n => n.id === edge.from);
-      const toNode = nodes.find(n => n.id === edge.to);
+    edges.forEach((edge) => {
+      const fromNode = nodes.find((n) => n.id === edge.from);
+      const toNode = nodes.find((n) => n.id === edge.to);
       if (fromNode && toNode) {
         ctx.beginPath();
         ctx.moveTo(fromNode.x, fromNode.y);
@@ -78,15 +73,10 @@ const InteractiveDijkstraVisualizer: React.FC = () => {
     });
 
     // Draw nodes
-    nodes.forEach(node => {
+    nodes.forEach((node) => {
       ctx.beginPath();
       ctx.arc(node.x, node.y, 15, 0, 2 * Math.PI);
-      ctx.fillStyle =
-        node.id === startNode
-          ? 'lightblue'
-          : selectedNode === node.id
-          ? 'yellow'
-          : '#eee';
+      ctx.fillStyle = node.id === startNode ? 'lightblue' : selectedNode === node.id ? 'yellow' : '#eee';
       ctx.strokeStyle = '#333';
       ctx.lineWidth = 2;
       ctx.fill();
@@ -103,8 +93,8 @@ const InteractiveDijkstraVisualizer: React.FC = () => {
       let current = targetNodeId;
       while (path[current]) {
         const prev = path[current]!;
-        const fromNode = nodes.find(n => n.id === prev);
-        const toNode = nodes.find(n => n.id === current);
+        const fromNode = nodes.find((n) => n.id === prev);
+        const toNode = nodes.find((n) => n.id === current);
         if (fromNode && toNode) {
           ctx.beginPath();
           ctx.moveTo(fromNode.x, fromNode.y);
@@ -120,16 +110,12 @@ const InteractiveDijkstraVisualizer: React.FC = () => {
     // Drawing new edge in progress
     if (newEdgeStartNode) {
       const start = nodes.find(n => n.id === newEdgeStartNode);
-      const endX = newEdgeEndNode
-        ? nodes.find(n => n.id === newEdgeEndNode)?.x
-        : mousePosition.current.x;
-      const endY = newEdgeEndNode
-        ? nodes.find(n => n.id === newEdgeEndNode)?.y
-        : mousePosition.current.y;
+      const endX = newEdgeEndNode ? nodes.find(n => n.id === newEdgeEndNode)?.x : mousePosition.current.x;
+      const endY = newEdgeEndNode ? nodes.find(n => n.id === newEdgeEndNode)?.y : mousePosition.current.y;
       if (start) {
         ctx.beginPath();
         ctx.moveTo(start.x, start.y);
-        ctx.lineTo(endX ?? start.x, endY ?? start.y);
+        ctx.lineTo(endX, endY);
         ctx.strokeStyle = 'orange';
         ctx.lineWidth = 3;
         ctx.stroke();
@@ -138,11 +124,11 @@ const InteractiveDijkstraVisualizer: React.FC = () => {
   };
 
   const runDijkstra = () => {
-    const unvisited = new Set(nodes.map(node => node.id));
+    const unvisited = new Set(nodes.map((node) => node.id));
     const currentDistances: { [key: string]: number } = {};
     const currentPath: { [key: string]: string | null } = {};
 
-    nodes.forEach(node => {
+    nodes.forEach((node) => {
       currentDistances[node.id] = Infinity;
       currentPath[node.id] = null;
     });
@@ -153,7 +139,7 @@ const InteractiveDijkstraVisualizer: React.FC = () => {
       let minDistance = Infinity;
       let currentNodeId: string | null = null;
 
-      unvisited.forEach(nodeId => {
+      unvisited.forEach((nodeId) => {
         if (currentDistances[nodeId] < minDistance) {
           minDistance = currentDistances[nodeId];
           currentNodeId = nodeId;
@@ -167,15 +153,13 @@ const InteractiveDijkstraVisualizer: React.FC = () => {
       unvisited.delete(currentNodeId);
 
       const neighbors = edges
-        .filter(edge => edge.from === currentNodeId)
-        .map(edge => ({ to: edge.to, weight: edge.weight }))
-        .concat(
-          edges
-            .filter(edge => edge.to === currentNodeId)
-            .map(edge => ({ to: edge.from, weight: edge.weight }))
-        ); // Assuming undirected edges
+        .filter((edge) => edge.from === currentNodeId)
+        .map((edge) => ({ to: edge.to, weight: edge.weight }))
+        .concat(edges
+          .filter((edge) => edge.to === currentNodeId)
+          .map((edge) => ({ to: edge.from, weight: edge.weight }))); // Assuming undirected edges
 
-      neighbors.forEach(neighbor => {
+      neighbors.forEach((neighbor) => {
         const distance = currentDistances[currentNodeId!] + neighbor.weight;
         if (distance < currentDistances[neighbor.to]) {
           currentDistances[neighbor.to] = distance;
@@ -188,24 +172,16 @@ const InteractiveDijkstraVisualizer: React.FC = () => {
     setPath(currentPath);
   };
 
-  const handleStartNodeChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
+  const handleStartNodeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setStartNode(event.target.value);
   };
 
-  const handleCanvasMouseDown = (
-    event: React.MouseEvent<HTMLCanvasElement>
-  ) => {
-    const canvasX =
-      event.clientX - canvasRef.current!.getBoundingClientRect().left;
-    const canvasY =
-      event.clientY - canvasRef.current!.getBoundingClientRect().top;
+  const handleCanvasMouseDown = (event: React.MouseEvent<HTMLCanvasElement>) => {
+    const canvasX = event.clientX - canvasRef.current!.getBoundingClientRect().left;
+    const canvasY = event.clientY - canvasRef.current!.getBoundingClientRect().top;
 
-    nodes.forEach(node => {
-      const distance = Math.sqrt(
-        (canvasX - node.x) ** 2 + (canvasY - node.y) ** 2
-      );
+    nodes.forEach((node) => {
+      const distance = Math.sqrt((canvasX - node.x) ** 2 + (canvasY - node.y) ** 2);
       if (distance < 15) {
         setSelectedNode(node.id);
         setIsDragging(true);
@@ -214,20 +190,14 @@ const InteractiveDijkstraVisualizer: React.FC = () => {
     });
   };
 
-  const handleCanvasMouseMove = (
-    event: React.MouseEvent<HTMLCanvasElement>
-  ) => {
+  const handleCanvasMouseMove = (event: React.MouseEvent<HTMLCanvasElement>) => {
     if (!isDragging || !selectedNode || !dragOffset) return;
-    const canvasX =
-      event.clientX - canvasRef.current!.getBoundingClientRect().left;
-    const canvasY =
-      event.clientY - canvasRef.current!.getBoundingClientRect().top;
+    const canvasX = event.clientX - canvasRef.current!.getBoundingClientRect().left;
+    const canvasY = event.clientY - canvasRef.current!.getBoundingClientRect().top;
 
-    setNodes(prevNodes =>
-      prevNodes.map(node =>
-        node.id === selectedNode
-          ? { ...node, x: canvasX - dragOffset.x, y: canvasY - dragOffset.y }
-          : node
+    setNodes((prevNodes) =>
+      prevNodes.map((node) =>
+        node.id === selectedNode ? { ...node, x: canvasX - dragOffset.x, y: canvasY - dragOffset.y } : node
       )
     );
   };
@@ -239,14 +209,7 @@ const InteractiveDijkstraVisualizer: React.FC = () => {
 
   const handleAddNode = () => {
     const newNodeId = String.fromCharCode(65 + nodes.length);
-    setNodes([
-      ...nodes,
-      {
-        id: newNodeId,
-        x: Math.random() * 350 + 25,
-        y: Math.random() * 150 + 25,
-      },
-    ]);
+    setNodes([...nodes, { id: newNodeId, x: Math.random() * 350 + 25, y: Math.random() * 150 + 25 }]);
   };
 
   const handleStartAddEdge = (nodeId: string) => {
@@ -259,37 +222,27 @@ const InteractiveDijkstraVisualizer: React.FC = () => {
     }
   };
 
-  const handleNewEdgeWeightChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleNewEdgeWeightChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewEdgeWeight(Number(event.target.value));
   };
 
   const handleConfirmNewEdge = () => {
-    if (
-      newEdgeStartNode &&
-      newEdgeEndNode &&
-      typeof newEdgeWeight === 'number'
-    ) {
-      setEdges([
-        ...edges,
-        { from: newEdgeStartNode, to: newEdgeEndNode, weight: newEdgeWeight },
-      ]);
+    if (newEdgeStartNode && newEdgeEndNode && typeof newEdgeWeight === 'number') {
+      setEdges([...edges, { from: newEdgeStartNode, to: newEdgeEndNode, weight: newEdgeWeight }]);
       setNewEdgeStartNode(null);
       setNewEdgeEndNode(null);
       setNewEdgeWeight('');
     }
   };
 
+  const mousePosition = useRef({ x: 0, y: 0 });
   const handleCanvasMouseLeave = () => {
     if (newEdgeStartNode && !newEdgeEndNode) {
       setNewEdgeStartNode(null);
     }
   };
 
-  const handleCanvasMoveForEdge = (
-    event: React.MouseEvent<HTMLCanvasElement>
-  ) => {
+  const handleCanvasMoveForEdge = (event: React.MouseEvent<HTMLCanvasElement>) => {
     mousePosition.current = {
       x: event.clientX - canvasRef.current!.getBoundingClientRect().left,
       y: event.clientY - canvasRef.current!.getBoundingClientRect().top,
@@ -303,30 +256,16 @@ const InteractiveDijkstraVisualizer: React.FC = () => {
 
       <div style={styles.controls}>
         <label htmlFor="startNode">Start Node:</label>
-        <select
-          id="startNode"
-          value={startNode}
-          onChange={handleStartNodeChange}
-        >
-          {nodes.map(node => (
-            <option key={node.id} value={node.id}>
-              {node.id}
-            </option>
+        <select id="startNode" value={startNode} onChange={handleStartNodeChange}>
+          {nodes.map((node) => (
+            <option key={node.id} value={node.id}>{node.id}</option>
           ))}
         </select>
         <button onClick={handleAddNode}>Add Node</button>
-        {newEdgeStartNode && !newEdgeEndNode && (
-          <span>Drawing edge from {newEdgeStartNode}</span>
-        )}
+        {newEdgeStartNode && !newEdgeEndNode && <span>Drawing edge from {newEdgeStartNode}</span>}
         {newEdgeStartNode && newEdgeEndNode && (
           <span>
-            Weight:{' '}
-            <input
-              type="number"
-              value={newEdgeWeight}
-              onChange={handleNewEdgeWeightChange}
-              style={{ width: '50px' }}
-            />
+            Weight: <input type="number" value={newEdgeWeight} onChange={handleNewEdgeWeightChange} style={{ width: '50px' }} />
             <button onClick={handleConfirmNewEdge}>Confirm Edge</button>
           </span>
         )}
@@ -338,30 +277,16 @@ const InteractiveDijkstraVisualizer: React.FC = () => {
         height={200}
         style={styles.canvas}
         onMouseDown={handleCanvasMouseDown}
-        onMouseMove={
-          isDragging
-            ? handleCanvasMouseMove
-            : newEdgeStartNode && !newEdgeEndNode
-            ? handleCanvasMoveForEdge
-            : () => {}
-        }
+        onMouseMove={isDragging ? handleCanvasMouseMove : newEdgeStartNode && !newEdgeEndNode ? handleCanvasMoveForEdge : () => {}}
         onMouseUp={handleCanvasMouseUp}
         onMouseLeave={handleCanvasMouseLeave}
-        onClick={event => {
-          const canvasX =
-            event.clientX - canvasRef.current!.getBoundingClientRect().left;
-          const canvasY =
-            event.clientY - canvasRef.current!.getBoundingClientRect().top;
+        onClick={(event) => {
+          const canvasX = event.clientX - canvasRef.current!.getBoundingClientRect().left;
+          const canvasY = event.clientY - canvasRef.current!.getBoundingClientRect().top;
           nodes.forEach(node => {
-            const distance = Math.sqrt(
-              (canvasX - node.x) ** 2 + (canvasY - node.y) ** 2
-            );
+            const distance = Math.sqrt((canvasX - node.x) ** 2 + (canvasY - node.y) ** 2);
             if (distance < 15) {
-              if (
-                newEdgeStartNode &&
-                newEdgeStartNode !== node.id &&
-                !newEdgeEndNode
-              ) {
+              if (newEdgeStartNode && newEdgeStartNode !== node.id && !newEdgeEndNode) {
                 handleEndAddEdge(node.id);
               } else if (!newEdgeStartNode) {
                 handleStartAddEdge(node.id);
@@ -385,7 +310,7 @@ const InteractiveDijkstraVisualizer: React.FC = () => {
   );
 };
 
-const styles: { [key: string]: React.CSSProperties } = {
+const styles = {
   container: {
     fontFamily: 'sans-serif',
     textAlign: 'center',
