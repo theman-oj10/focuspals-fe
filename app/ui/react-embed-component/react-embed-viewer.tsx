@@ -4,7 +4,11 @@ import { Card, CardContent } from '@/components/ui/card';
 import { extractComponentToTsx } from './json-to-tsx-utility';
 import DynamicComponent from './DynamicComponent';
 
-function ReactEmbedViewer() {
+interface ReactEmbedViewerProps {
+  jsonPath: string;
+}
+
+function ReactEmbedViewer({ jsonPath }: ReactEmbedViewerProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [componentKey, setComponentKey] = useState<number>(0);
@@ -13,7 +17,6 @@ function ReactEmbedViewer() {
     const processComponent = async () => {
       try {
         // Get paths for the JSON and output TSX file
-        const jsonPath = "/Users/samuel/dev/focuspals-fe/app/ui/react-embed-component/dijkstra_visualizer.json";
         const outputPath = "/Users/samuel/dev/focuspals-fe/app/ui/react-embed-component/DynamicComponent.tsx";
         
         // Convert the JSON to TSX
@@ -34,7 +37,7 @@ function ReactEmbedViewer() {
     };
 
     processComponent();
-  }, []);
+  }, [jsonPath]);
 
   if (error) {
     return (

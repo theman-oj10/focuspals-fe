@@ -1,4 +1,0 @@
-{
-    "code": "import React, { useState } from 'react';\n\nconst SimpleGame = () => {\n  return (\n    <div>hello</div>\n  );\n};\n\nexport default SimpleGame;"
-  }
-  
