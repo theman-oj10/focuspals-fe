@@ -223,7 +223,7 @@ export default function MainDisplay({
                   : 'bg-white border-gray-300 text-gray-700'
               }`}
             >
-              <span className="mr-2">🗺️</span> Mini Map
+              <span className="mr-2">🗺️</span> Mini Game
             </button>
           </div>
         )}
