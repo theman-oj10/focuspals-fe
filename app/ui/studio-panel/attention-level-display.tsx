@@ -1,22 +1,22 @@
-import { useState, useEffect, useRef } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Brain, Coffee } from 'lucide-react';
 import {
   BACKEND_API_URL,
   FOCUS_HISTORY_SIZE,
   LOW_FOCUS_THRESHOLD,
   SUGGESTION_COOLDOWN,
 } from '@/app/lib/constants';
-import io from 'socket.io-client';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
   DialogDescription,
   DialogFooter,
+  DialogHeader,
+  DialogTitle,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
+import { Brain } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import io from 'socket.io-client';
 
 // Custom progress bar component with controlled animations and colors
 interface CustomProgressProps {
@@ -358,7 +358,7 @@ export default function AttentionLevelTracker({
       case 'quiz':
         return 'Interactive Quiz';
       case 'react':
-        return 'Mini Map';
+        return 'Mini Game';
       default:
         return type.charAt(0).toUpperCase() + type.slice(1);
     }

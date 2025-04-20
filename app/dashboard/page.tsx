@@ -48,7 +48,7 @@ export default function Dashboard() {
       formData.append('file', selectedFile);
 
       console.log('Processing file, please wait...');
-      await new Promise(resolve => setTimeout(resolve, 15000));
+      await new Promise(resolve => setTimeout(resolve, 20_000));
       console.log('Processing complete!');
 
       // Make API request to get content

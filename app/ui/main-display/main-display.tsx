@@ -1,18 +1,18 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import TextContent from './content/text-content';
-import DefaultDisplay from './default-display';
-import ReactEmbedViewer from '../react-embed-component/react-embed-viewer';
-import FlipCardContent from './content/flip-card-content';
-import QuizContent from './content/quiz-content';
-import VideoContent from './content/video-content';
 import {
   SAMPLE_FLIP_CARD_DATA,
   SAMPLE_QUIZ_DATA,
   SAMPLE_TEXT_DATA,
 } from '@/app/lib/sample-data';
+import { useEffect, useState } from 'react';
 import { Spinner } from '../dashboard/redirect';
+import ReactEmbedViewer from '../react-embed-component/react-embed-viewer';
+import FlipCardContent from './content/flip-card-content';
+import QuizContent from './content/quiz-content';
+import TextContent from './content/text-content';
+import VideoContent from './content/video-content';
+import DefaultDisplay from './default-display';
 
 interface MainDisplayProps {
   isLoading?: boolean;
@@ -105,13 +105,13 @@ export default function MainDisplay({
       case 'flipcard':
         return (
           <FlipCardContent
-            data={contentData.data || SAMPLE_FLIP_CARD_DATA.data}
+            data={SAMPLE_FLIP_CARD_DATA.data}
           />
         );
       case 'tiktok':
         return <VideoContent />;
       case 'quiz':
-        return <QuizContent data={contentData.data || SAMPLE_QUIZ_DATA.data} />;
+        return <QuizContent data={SAMPLE_QUIZ_DATA.data} />;
       case 'react':
         return (
           <ReactEmbedViewer jsonPath="./app/ui/react-embed-component/SAMPLE_VISUALIZER_DATA.json" />
@@ -123,7 +123,7 @@ export default function MainDisplay({
 
   if (isLoading) {
     return (
-      <div className="flex-1 flex flex-col bg-white p-6 overflow-hidden">
+      <div className="flex-1 flex flex-col h-full bg-white p-6 overflow-hidden">
         <div className="flex-1 overflow-y-auto border rounded-lg p-8 bg-blue-50 border-blue-200 flex flex-col items-center justify-center">
           <Spinner />
           <h1 className="text-2xl font-bold text-gray-800">
@@ -182,7 +182,7 @@ export default function MainDisplay({
           </div>
         ) : (
           // Empty state when no content
-          <div className="flex flex-col items-center justify-center h-full">
+          <div className="flex flex-col items-center justify-center h-full bg-blue-50">
             <h3 className="text-xl font-semibold mb-2">Ready to get focused?</h3>
             <p className="text-gray-600 mb-4 text-center">
               Upload your learning materials to start a personalized learning experience

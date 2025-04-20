@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 
 export interface QuizQuestion {
   id: string;
@@ -23,7 +23,7 @@ export default function QuizContent({ data }: QuizContentProps) {
   // Validate that data and questions exist
   if (!data || !data.questions || !Array.isArray(data.questions)) {
     return (
-      <div className="w-full max-w-2xl h-full flex flex-col bg-white rounded-lg shadow-md overflow-hidden">
+      <div className="w-full h-full flex flex-col bg-white rounded-lg shadow-md overflow-hidden">
         <div className="p-6 flex items-center justify-center flex-1">
           <div className="text-center">
             <h2 className="text-xl font-bold text-red-500 mb-2">
@@ -82,7 +82,7 @@ export default function QuizContent({ data }: QuizContentProps) {
   // Additional validation check for currentQuestion
   if (!currentQuestion) {
     return (
-      <div className="w-full max-w-2xl h-full flex flex-col bg-white rounded-lg shadow-md overflow-hidden">
+      <div className="w-full h-full flex flex-col bg-white rounded-lg shadow-md overflow-hidden">
         <div className="p-6 flex items-center justify-center flex-1">
           <div className="text-center">
             <h2 className="text-xl font-bold text-red-500 mb-2">
@@ -154,7 +154,7 @@ export default function QuizContent({ data }: QuizContentProps) {
     const percentage = Math.round((score / data.questions.length) * 100);
 
     return (
-      <div className="w-full max-w-2xl h-full flex flex-col bg-white rounded-lg shadow-md overflow-hidden">
+      <div className="w-full h-full flex flex-col bg-white rounded-lg shadow-md overflow-hidden">
         <div className="p-6">
           <h1 className="text-2xl font-bold text-center mb-6">
             {data.title} - Results
@@ -217,7 +217,7 @@ export default function QuizContent({ data }: QuizContentProps) {
   }
 
   return (
-    <div className="w-full max-w-2xl h-full flex flex-col bg-white rounded-lg shadow-md overflow-hidden">
+    <div className="w-full h-full flex flex-col bg-white rounded-lg shadow-md overflow-hidden">
       <div className="p-6 flex-1 overflow-y-auto">
         <h1 className="text-2xl font-bold mb-2">{data.title}</h1>
         {data.description && (
