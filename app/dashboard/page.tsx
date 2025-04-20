@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Sidebar from '@/app/ui/sidebar/sidebar';
 import StudioPanel from '@/app/ui/studio-panel/studio-panel';
 import UploadSourcesModal from '@/app/ui/modal/upload-source-modal';
@@ -17,16 +17,19 @@ export default function Dashboard() {
     const processFile = async () => {
       console.log(selectedFile);
       if (!selectedFile) return;
-      
+
       try {
-        const response = await sendFile(selectedFile, 'http://127.0.0.1:2000/api/process-file');
+        const response = await sendFile(
+          selectedFile,
+          'http://127.0.0.1:2000/api/process-file'
+        );
         const data = await response.json();
         console.log('File processed:', data);
       } catch (error) {
         console.error('Error processing file:', error);
       }
     };
-    
+
     processFile();
   }, [selectedFile]);
 
