@@ -7,7 +7,6 @@ import UploadSourcesModal from '@/app/ui/modal/upload-source-modal';
 import TextViewer from '@/app/ui/sidebar/text-viewer';
 import MainDisplay from '@/app/ui/main-display/main-display';
 import { sendFile } from '../services/send-file';
-import ReactEmbedViewer from '@/app/ui/react-embed-component/react-embed-viewer';
 
 export default function Dashboard() {
   const [showModal, setShowModal] = useState(false);
