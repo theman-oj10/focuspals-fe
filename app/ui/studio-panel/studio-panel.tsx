@@ -5,7 +5,7 @@ import AttentionLevelTracker from './attention-level-display';
 
 export default function StudioPanel() {
   return (
-    <div className="w-1/4 border-l bg-white p-4 flex flex-col justify-between">
+    <div className="w-1/4 border-l bg-white px-4 py-8 flex flex-col justify-between">
       <AttentionLevelTracker />
       <AttentionChart />
       <VideoStream />

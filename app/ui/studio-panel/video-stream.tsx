@@ -124,7 +124,7 @@ const VideoStream = () => {
   };
 
   return (
-    <div className="relative aspect-video bg-gray-900 flex items-center justify-center rounded-lg overflow-hidden shadow-lg">
+    <div className="relative aspect-video bg-gray-900 flex items-center justify-center rounded-lg overflow-hidden shadow-sm">
       <video
         ref={videoRef}
         autoPlay

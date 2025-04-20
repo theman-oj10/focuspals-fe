@@ -69,7 +69,7 @@ export default function AttentionLevelTracker() {
   };
 
   return (
-    <Card>
+    <Card className="shadow-sm">
       <CardHeader className="pb-2">
         <CardTitle className="text-base flex items-center gap-2">
           <Brain className="h-4 w-4" /> Current Attention Level

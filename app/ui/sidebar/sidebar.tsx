@@ -26,7 +26,11 @@ export default function Sidebar({
     <div className="w-1/5 p-4 border-r bg-white flex flex-col h-full">
       <h1 className="text-xl font-semibold mb-4">Sources</h1>
       <div className="space-y-2">
-        <Button variant="outline" className="w-full" onClick={onAddClick}>
+        <Button
+          variant="outline"
+          className="w-full border-blue-500 bg-blue-100 text-blue-500 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+          onClick={onAddClick}
+        >
           + Add
         </Button>
         <Button variant="outline" className="w-full">

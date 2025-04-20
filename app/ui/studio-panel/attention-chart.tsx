@@ -72,7 +72,7 @@ const chartConfig = {
 
 export default function AttentionChart() {
   return (
-    <Card className="mb-4">
+    <Card className="shadow-sm">
       <CardHeader className="pb-2">
         <CardTitle className="text-base flex items-center gap-2">
           <Activity className="h-4 w-4" /> Your History
