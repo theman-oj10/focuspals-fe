@@ -358,7 +358,7 @@ export default function AttentionLevelTracker({
       case 'quiz':
         return 'Interactive Quiz';
       case 'react':
-        return 'Mini Map';
+        return 'Mini Game';
       default:
         return type.charAt(0).toUpperCase() + type.slice(1);
     }
