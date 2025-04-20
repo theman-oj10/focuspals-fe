@@ -5,25 +5,15 @@ import React, { useEffect, useState, useRef } from 'react';
 import io from 'socket.io-client';
 import TextContent from './content/text-content';
 import DefaultDisplay from './default-display';
-import FlipCardContent from './content/flip-card-content';
 import ReactEmbedViewer from '../react-embed-component/react-embed-viewer';
-// Import other content components as you develop them
-// import DiagramContent from './content/diagram-content';
-// import VideoContent from './content/video-content';
-// import AudioContent from './content/audio-content';
-// import MiniGameContent from './content/mini-game-content';
-import { SAMPLE_FLIP_CARD_DATA, SAMPLE_QUIZ_DATA } from '@/app/lib/sample-data';
+import FlipCardContent from './content/flip-card-content';
 import QuizContent from './content/quiz-content';
-
-// Sample text content
-const SAMPLE_TEXT_DATA = {
-  id: 'sample-text',
-  type: 'text',
-  data: {
-    title: 'Sample Text Content',
-    content: 'This is sample text content for demonstration purposes.',
-  },
-};
+import VideoContent from './content/video-content';
+import {
+  SAMPLE_FLIP_CARD_DATA,
+  SAMPLE_QUIZ_DATA,
+  SAMPLE_TEXT_DATA,
+} from '@/app/lib/sample-data';
 
 interface MainDisplayProps {
   onUpload: () => void;
@@ -50,8 +40,7 @@ export default function MainDisplay({ onUpload }: MainDisplayProps) {
     if (demoMode) return; // Don't connect to socket in demo mode
 
     // Get the WebSocket server URL from environment variable
-    const socketServerUrl =
-      process.env.NEXT_PUBLIC_SOCKET_SERVER_URL || 'http://localhost:4000';
+    const socketServerUrl = 'http://localhost:4000';
 
     // Create WebSocket connection
     socketRef.current = io(socketServerUrl);
@@ -81,7 +70,6 @@ export default function MainDisplay({ onUpload }: MainDisplayProps) {
     } else if (type === 'flipcard') {
       setCurrentContent(SAMPLE_FLIP_CARD_DATA as ContentUpdate);
     }
-    // Add more content types as you develop them
   };
 
   // Render the appropriate component based on content type
@@ -100,17 +88,18 @@ export default function MainDisplay({ onUpload }: MainDisplayProps) {
         return <TextContent data={SAMPLE_TEXT_DATA.data} />;
       case 'flipcard':
         return <FlipCardContent data={SAMPLE_FLIP_CARD_DATA.data} />;
-      // Add other cases as you develop more components
-      // case 'diagram':
-      //   return <DiagramContent data={contentToRender.data} />;
-      // case 'video':
-      //   return <VideoContent data={contentToRender.data} />;
-      // case 'audio':
-      //   return <AudioContent data={contentToRender.data} />;
+      case 'video':
+        return <VideoContent />;
       case 'quiz':
         return <QuizContent data={SAMPLE_QUIZ_DATA.data} />;
       case 'minigame':
-        return <ReactEmbedViewer jsonPath={"/Users/samuel/dev/focuspals-fe/app/ui/react-embed-component/SAMPLE_VISUALIZER_DATA.json"}/>;
+        return (
+          <ReactEmbedViewer
+            jsonPath={
+              '/Users/evanyan13/2025/focuspals-fe/app/ui/react-embed-component/SAMPLE_VISUALIZER_DATA.json'
+            }
+          />
+        );
       default:
         return <TextContent data={'Unsupported content type'} />;
     }
@@ -155,7 +144,7 @@ export default function MainDisplay({ onUpload }: MainDisplayProps) {
               <option value="text">Text</option>
               <option value="flipcard">Flip Cards</option>
               {/* <option value="diagram">Diagram</option> */}
-              {/* <option value="video">Video</option> */}
+              <option value="video">Video</option>
               {/* <option value="audio">Audio</option> */}
               <option value="quiz">Quiz</option>
               <option value="minigame">Mini Game</option>
