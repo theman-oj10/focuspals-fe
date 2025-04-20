@@ -119,7 +119,7 @@ export default function UploadArea({ onFilesSelected, onUploadComplete }: Upload
           onChange={handleFileChange} 
           style={{ display: 'none' }} 
           multiple 
-          accept=".pdf,.txt,.md,.mp3,.mp4"
+          accept=".pdf,.txt,.md"
         />
         
         {/* Show files being uploaded if any */}

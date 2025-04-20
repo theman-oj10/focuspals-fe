@@ -1,32 +1,40 @@
 "use client";
 
-import React, { useState } from "react";
-import { FileText } from "lucide-react";
+import { FileText, Eye, EyeOff } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface SidebarProps {
     onAddClick?: () => void;
     uploadedFiles?: File[];
+    onFileView?: (file: File) => void;
+    selectedFile?: File;
 }
 
-export default function Sidebar({ onAddClick, uploadedFiles = [] }: SidebarProps) {
-    const [checkedFiles, setCheckedFiles] = useState<{[key: string]: boolean}>({});
-    
-    const toggleFileCheck = (fileId: string) => {
-        setCheckedFiles(prev => ({
-            ...prev,
-            [fileId]: !prev[fileId]
-        }));
+export default function Sidebar({ onAddClick, uploadedFiles = [], onFileView, selectedFile }: SidebarProps) {
+
+    const handleViewFile = (file: File) => {
+        if (onFileView) {
+            onFileView(file);
+        }
     };
 
     return (
         <div className="w-1/5 p-4 border-r bg-white flex flex-col h-full">
             <h1 className="text-xl font-semibold mb-4">Sources</h1>
             <div className="space-y-2">
-                <button 
-                    className="w-full py-2 px-3 bg-gray-100 rounded"
+                <Button 
+                    variant="outline" 
+                    className="w-full"
                     onClick={onAddClick}
-                >+ Add</button>
-                <button className="w-full py-2 px-3 bg-gray-100 rounded">Discover</button>
+                >
+                    + Add
+                </Button>
+                <Button 
+                    variant="outline" 
+                    className="w-full"
+                >
+                    Discover
+                </Button>
             </div>
 
             {uploadedFiles.length > 0 ? (
@@ -34,13 +42,8 @@ export default function Sidebar({ onAddClick, uploadedFiles = [] }: SidebarProps
                     <h2 className="text-md font-medium mb-2">Upload Log</h2>
                     <div className="space-y-2">
                         {uploadedFiles.map((file, index) => {
-                            // Use the file name + index as a unique identifier
-                            const fileId = `${file.name}-${index}`;
-                            
-                            // Initialize as checked if not already in state
-                            if (checkedFiles[fileId] === undefined) {
-                                checkedFiles[fileId] = true;
-                            }
+
+                            const isTextFile = file.type === 'text/plain' || file.name.endsWith('.txt');
                             
                             return (
                                 <div 
@@ -51,12 +54,23 @@ export default function Sidebar({ onAddClick, uploadedFiles = [] }: SidebarProps
                                         <FileText className="h-4 w-4 mr-2 text-blue-500" />
                                         <p className="text-sm font-medium truncate">{file.name}</p>
                                     </div>
-                                    <input
-                                        type="checkbox"
-                                        checked={checkedFiles[fileId]}
-                                        onChange={() => toggleFileCheck(fileId)}
-                                        className="h-4 w-4 accent-blue-500 cursor-pointer"
-                                    />
+                                    <div className="flex items-center gap-2">
+                                        {isTextFile && onFileView && (
+                                            <Button
+                                                variant="ghost"
+                                                size="icon"
+                                                onClick={() => handleViewFile(file)}
+                                                title="View text file"
+                                                className="h-8 w-8 p-0"
+                                            >
+                                                {selectedFile === file ? (
+                                                    <Eye className="h-4 w-4" />
+                                                ) : (
+                                                    <EyeOff className="h-4 w-4 text-gray-400" />
+                                                )}
+                                            </Button>
+                                        )}
+                                    </div>
                                 </div>
                             );
                         })}
