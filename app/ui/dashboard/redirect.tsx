@@ -118,7 +118,7 @@ export default function Redirect() {
         </div>
 
         <h1 className="text-2xl font-bold text-gray-800">
-          Kickstart your learning journey!
+          Preparing Your Dashboard
         </h1>
 
         <p className="text-gray-600 mb-4">
