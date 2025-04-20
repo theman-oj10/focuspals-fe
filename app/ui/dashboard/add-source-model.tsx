@@ -1,11 +1,11 @@
 'use client';
 
 import { useEffect } from 'react';
-import ModalHeader from '@/app/ui/modal/modal-header';
-import DiscoverSourcesButton from '@/app/ui/modal/discover-sources-button';
-import UploadArea from '@/app/ui/modal/upload-area';
-import SourceOptions from '@/app/ui/modal/source-options';
-import SourceLimit from '@/app/ui/modal/source-limit';
+import ModalHeader from './components/modal-header';
+import DiscoverSourcesButton from './components/discover-sources-button';
+import UploadArea from './components/upload-area';
+import SourceOptions from './components/source-options';
+import SourceLimit from './components/source-limit';
 
 export default function AddSourcesModal({ onClose }: { onClose?: () => void }) {
   // Add event listener for Escape key
