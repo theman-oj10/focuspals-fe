@@ -141,9 +141,7 @@ export default function MainDisplay({ onUpload }: MainDisplayProps) {
               <option value="default">Default</option>
               <option value="text">Text</option>
               <option value="flipcard">Flip Cards</option>
-              {/* <option value="diagram">Diagram</option> */}
               <option value="video">Video</option>
-              {/* <option value="audio">Audio</option> */}
               <option value="quiz">Quiz</option>
               <option value="minigame">Mini Game</option>
             </select>
