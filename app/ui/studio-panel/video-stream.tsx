@@ -48,8 +48,9 @@ const VideoStream = () => {
 
     // Listen for uploadInfo events from backend
     socketRef.current.on(
-      'uploadInfo',
+      'updateInfo',
       (data: FocusData & { processedImage: string }) => {
+        console.log('Received data from server:', data);
         // Update focus data state
         setFocusData(data);
 
@@ -121,29 +122,46 @@ const VideoStream = () => {
         const imageCapture = new ImageCapture(videoTrack);
 
         const captureFrame = () => {
-          imageCapture.grabFrame().then(imageBitmap => {
-            // Create a canvas to extract image data from the ImageBitmap
-            const canvas = document.createElement('canvas');
-            canvas.width = imageBitmap.width;
-            canvas.height = imageBitmap.height;
+          if (!socketRef.current || !socketRef.current.connected) {
+            console.log('Socket not connected, skipping frame capture');
+            return;
+          }
 
-            // Draw the ImageBitmap on the canvas
-            const ctx = canvas.getContext('2d');
-            if (!ctx) {
-              console.error('Failed to get canvas context');
-              return;
-            }
-            ctx.drawImage(imageBitmap, 0, 0);
+          imageCapture
+            .grabFrame()
+            .then(imageBitmap => {
+              // Create a canvas to extract image data from the ImageBitmap
+              const canvas = document.createElement('canvas');
+              canvas.width = imageBitmap.width;
+              canvas.height = imageBitmap.height;
 
-            // Convert canvas to a base64 string (remove the "data:image/png;base64," prefix if needed)
-            const base64Image = canvas
-              .toDataURL('image/jpeg', 0.7)
-              .split(',')[1];
+              // Draw the ImageBitmap on the canvas
+              const ctx = canvas.getContext('2d');
+              if (!ctx) {
+                console.error('Failed to get canvas context');
+                return;
+              }
+              ctx.drawImage(imageBitmap, 0, 0);
 
-            // Send the base64-encoded image to the server
-            socketRef.current.emit('sendVideoFrame', base64Image);
-            setFrameCount(prev => prev + 1);
-          });
+              try {
+                // Convert canvas to a base64 string (remove the "data:image/png;base64," prefix if needed)
+                const base64Image = canvas
+                  .toDataURL('image/jpeg', 0.7)
+                  .split(',')[1];
+
+                // Send the base64-encoded image to the server
+                if (socketRef.current && socketRef.current.connected) {
+                  socketRef.current.emit('sendVideoFrame', base64Image);
+                  setFrameCount(prev => prev + 1);
+                }
+              } catch (e) {
+                console.error('Error processing or sending frame:', e);
+              }
+            })
+            .catch(err => {
+              console.error('Error capturing frame:', err);
+              // Don't throw the error further to prevent the promise from being uncaught
+            });
         };
 
         // Capture and send video frames every 100ms
@@ -313,7 +331,7 @@ const VideoStream = () => {
             <Button
               size="sm"
               variant="secondary"
-              className="rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-sm"
+              className="rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-sm text-white"
               onClick={toggleDisplayMode}
             >
               {displayMode === 'processed' ? 'Raw Feed' : 'Processed Feed'}
