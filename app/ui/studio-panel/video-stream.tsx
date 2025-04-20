@@ -35,37 +35,63 @@ const VideoStream = () => {
   );
 
   useEffect(() => {
-    // Create WebSocket connection
-    socketRef.current = io(BACKEND_API_URL);
+    let connectionTimeout: NodeJS.Timeout;
 
-    socketRef.current.on('connect', () => {
-      setIsConnected(true);
-    });
+    // Delay socket connection to ensure component is fully mounted
+    connectionTimeout = setTimeout(() => {
+      // Create WebSocket connection with reconnection options
+      socketRef.current = io(BACKEND_API_URL, {
+        reconnection: true,
+        reconnectionAttempts: 5,
+        reconnectionDelay: 1000,
+        timeout: 10000,
+        transports: ['websocket', 'polling'], // Try WebSocket first, then fallback to polling
+      });
 
-    socketRef.current.on('disconnect', () => {
-      setIsConnected(false);
-    });
+      socketRef.current.on('connect', () => {
+        console.log('Socket connected successfully');
+        setIsConnected(true);
+      });
 
-    // Listen for uploadInfo events from backend
-    socketRef.current.on(
-      'updateInfo',
-      (data: FocusData & { processedImage: string }) => {
-        console.log('Received data from server:', data);
-        // Update focus data state
-        setFocusData(data);
+      socketRef.current.on('disconnect', () => {
+        console.log('Socket disconnected');
+        setIsConnected(false);
+      });
 
-        // Display the processed image on canvas
-        if (data.processedImage && displayMode === 'processed') {
-          displayProcessedImage(data.processedImage);
+      socketRef.current.on('connect_error', (err: any) => {
+        console.error('Socket connection error:', err.message);
+      });
+
+      // Listen for uploadInfo events from backend
+      socketRef.current.on(
+        'updateInfo',
+        (data: FocusData & { processedImage: string }) => {
+          console.log('Received data from server:', data);
+          // Update focus data state
+          setFocusData(data);
+
+          // Display the processed image on canvas
+          if (data.processedImage && displayMode === 'processed') {
+            displayProcessedImage(data.processedImage);
+          }
         }
-      }
-    );
+      );
 
-    startCamera();
+      // Start camera after socket is initialized
+      startCamera();
+    }, 1000); // 1 second delay before attempting connection
 
     return () => {
+      // Clean up timeout, socket, and camera when component unmounts
+      if (connectionTimeout) clearTimeout(connectionTimeout);
       stopCamera();
-      socketRef.current?.disconnect();
+      if (socketRef.current) {
+        socketRef.current.off('updateInfo');
+        socketRef.current.off('connect');
+        socketRef.current.off('disconnect');
+        socketRef.current.off('connect_error');
+        socketRef.current.disconnect();
+      }
     };
   }, [displayMode]);
 
