@@ -42,7 +42,12 @@ export default function Dashboard() {
 
       {/* Right Studio Panel */}
       <StudioPanel />
-      {showModal && <AddSourceModal onClose={() => setShowModal(false)} />}
+      {showModal && (
+        <AddSourceModal
+          onClose={() => setShowModal(false)}
+          handleFileUpload={handleFileUpload}
+        />
+      )}
     </div>
   );
 }
